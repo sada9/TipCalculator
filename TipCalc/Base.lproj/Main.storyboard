@@ -12,7 +12,6 @@
         <!--TIP Calculator-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TipCalc" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -72,10 +71,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.21205627696414911" green="0.68968588087461136" blue="0.56463737313718321" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.39069720701383204" green="0.71156770639468969" blue="0.67609806844951781" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.28638821473915815" green="0.90448915155440412" blue="0.73802338717422178" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.39794211750000003" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="TIP Calculator" id="MP1-U8-uCS">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="bhB-ad-ofR">
@@ -92,6 +91,7 @@
                         <outlet property="totalAmount" destination="5V4-Nm-XhM" id="bXX-vl-w5p"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1141.5999999999999" y="118.29085457271366"/>
         </scene>
@@ -108,14 +108,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select default tip %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d97-QK-09a">
-                                <rect key="frame" x="29" y="94" width="206" height="34"/>
+                                <rect key="frame" x="23" y="94" width="206" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zgR-gR-3cZ">
-                                <rect key="frame" x="21" y="149" width="333" height="29"/>
+                                <rect key="frame" x="21" y="135" width="333" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="15%"/>
@@ -125,7 +125,7 @@
                                 <color key="tintColor" red="0.1156921489" green="0.36538617229999998" blue="0.2981390545" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </segmentedControl>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.39794211750000003" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
                         <outlet property="tipPercentageSegment" destination="zgR-gR-3cZ" id="uRB-c5-tSq"/>
@@ -140,9 +140,11 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b7K-Gf-oKH" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5K0-Jx-Byb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="5K0-Jx-Byb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.39794211750000003" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.39794211750000003" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
