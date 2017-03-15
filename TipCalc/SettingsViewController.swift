@@ -12,11 +12,12 @@ class SettingsViewController: UIViewController {
 
     @IBOutlet weak var tipPercentageSegment: UISegmentedControl!
     
-    var defTipPer: Double?
+    var defTipPerIndex: Double?
     let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       tipPercentageSegment.selectedSegmentIndex =  defaults.integer(forKey: "tipcalculator_tipPerIndex")
         tipPercentageSegment.addTarget(self, action: #selector(tipPercentageIndexChanged(_:)), for: UIControlEvents.valueChanged)
     }
 

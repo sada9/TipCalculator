@@ -23,70 +23,30 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.prepateForAnimation()
         self.billAmount.delegate = self
         
         billAmount.addTarget(self, action: #selector(billAmountDidChange(_:)), for: .editingChanged)
         tipPercentageSegment.addTarget(self, action: #selector(tipPercentageIndexChanged(_:)), for: UIControlEvents.valueChanged)
+        billAmount.becomeFirstResponder()
+        let notificationCenter = NotificationCenter.default
+
+        // Add observer:
+        notificationCenter.addObserver(self,
+                                       selector: #selector(ViewController.applicationWillTerminate),
+                                       name:NSNotification.Name.UIApplicationWillTerminate,
+                                       object:nil)
+      
+        notificationCenter.addObserver(self, selector: #selector(ViewController.applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
-  
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
+
     
-     func showUIControls() {
-        
-        UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
-            self.billAmount.frame.origin.y = 100
-        }, completion: { (success:Bool) in
-        })
-        
-        UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
-            self.tipPercentageSegment.frame.origin.y = 230
-        }, completion: { (success:Bool) in
-            
-            
-            UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
-                self.calcView.frame.origin.y = 310
-            }, completion: { (success:Bool) in
-                
-            })
-            
-        })
-        
-    }
+    func billAmountDidChange(_ textField: UITextField? = nil) {
     
-    func hideUIControls() {
-        
-        UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
-            self.calcView.frame.origin.y = 750
-        }, completion: { (success:Bool) in
-            
-            UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
-                self.tipPercentageSegment.frame.origin.y = 750
-            }, completion: { (success:Bool) in
-                
-                UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
-                    self.billAmount.frame.origin.y = 279
-                }, completion: { (success:Bool) in
-                })
-                
-            })
-            
-        })
-        
-        
-        
-        
-        
-        
-    }
-    
-    func billAmountDidChange(_ textField: UITextField) {
-    
-        guard let billAmtString = textField.text else {
+        guard let billAmtString = textField?.text else {
             return
         }
         
@@ -135,51 +95,111 @@ class ViewController: UIViewController {
         self.tipPercentageSegment.frame.origin.y = 750
     }
     
-    func applicationWillTerminateNotification() {
+    func applicationWillTerminate() {
         let date = NSDate().timeIntervalSince1970
         defaults.set(date, forKey: "tipcalculator_closingtime")
         defaults.set(self.billAmount.text, forKey: "tipcalculator_billamount")
         defaults.set(self.tipPer!, forKey: "tipcalculator_tipPer")
-        defaults.set(0, forKey: "tipcalculator_tipPerIndex")
-        
+        defaults.set(self.tipPercentageSegment.selectedSegmentIndex, forKey: "tipcalculator_tipPerIndex")
         defaults.synchronize()
     }
     
     func applicationDidBecomeActive() {
         let lastClosingTime = defaults.double(forKey: "tipcalculator_closingtime")
         
-//        let currentTime = NSDate().timeIntervalSince1970
-//        let difference = currentTime - lastClosingTime
-//        if difference <= 600 {
-//            let billAmount = defaults.valueForKey("tipcalculator_billamount")
-//            let tipSelectedIndex = defaults.integerForKey("tipcalculator_tipselectedindex")
-//            if let b = billAmount as? String {
-//                billField.text = b
-//                tipControl.selectedSegmentIndex = tipSelectedIndex
-//                calculateTotalAmount()
-//            }
-//            
-//        }
+        let currentTime = NSDate().timeIntervalSince1970
+        let difference = currentTime - lastClosingTime
+        if difference <= 1 {
+            let billAmount = defaults.value(forKey: "tipcalculator_billamount")
+            let tipSelectedIndex = defaults.integer(forKey: "tipcalculator_tipselectedindex")
+             let tipPercentage = defaults.double(forKey: "tipcalculator_tipPer")
+
+            if let amount = billAmount as? String {
+                self.billAmount.text = amount
+                self.tipPer = tipPercentage
+                self.tipPercentageSegment.selectedSegmentIndex = tipSelectedIndex
+                billAmountDidChange(self.billAmount)
+            }
+            
+        }
     }
     
     func updateSettingsTipValue() {
         let defaults = UserDefaults.standard
+
         self.defaultTipPer = defaults.double(forKey: "tipcalculator_tipPer")
+
         self.defaultTipPerIndex =  defaults.integer(forKey: "tipcalculator_tipPerIndex")
+
+        if self.defaultTipPerIndex == 0 {
+            self.defaultTipPerIndex = 0
+            self.defaultTipPer = 15
+        }
         self.tipPercentageSegment.selectedSegmentIndex = self.defaultTipPerIndex!
         self.tipPer = self.defaultTipPer
+
+        //calc tip
+        if !(self.billAmount.text?.isEmpty)! {
+            billAmountDidChange(self.billAmount)
+        }
+
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateSettingsTipValue()
+     
+    }
+
+    func showUIControls() {
+
+        UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
+            self.billAmount.frame.origin.y = 100
+        }, completion: { (success:Bool) in
+        })
+
+        UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
+            self.tipPercentageSegment.frame.origin.y = 230
+        }, completion: { (success:Bool) in
+
+
+            UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
+                self.calcView.frame.origin.y = 310
+            }, completion: { (success:Bool) in
+
+            })
+
+        })
+
+    }
+
+    func hideUIControls() {
+
+        UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
+            self.calcView.frame.origin.y = 750
+        }, completion: { (success:Bool) in
+
+            UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
+                self.tipPercentageSegment.frame.origin.y = 750
+            }, completion: { (success:Bool) in
+
+                UIView.animate(withDuration: 0.30, delay: 0, options: .transitionCrossDissolve, animations: {
+                    self.billAmount.frame.origin.y = 279
+                }, completion: { (success:Bool) in
+                })
+
+            })
+
+        })
+
     }
 }
 
 extension ViewController : UITextFieldDelegate {
     
     public func textFieldDidBeginEditing(_ textField: UITextField) {
-      self.showUIControls()
+      //self.showUIControls()
     }
     
    
