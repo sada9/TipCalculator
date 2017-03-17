@@ -74,7 +74,7 @@
                                 <color key="backgroundColor" red="0.39069720701383204" green="0.71156770639468969" blue="0.67609806844951781" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.39794211750000003" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.9040668968091975" green="0.8961520398190943" blue="0.88590591143580044" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="TIP Calculator" id="MP1-U8-uCS">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="bhB-ad-ofR">
@@ -87,8 +87,10 @@
                         <outlet property="billAmount" destination="hqa-xd-IIn" id="S7f-0s-CsZ"/>
                         <outlet property="calcView" destination="5Ly-vU-jKv" id="xbC-sA-9n6"/>
                         <outlet property="tipAmount" destination="6dC-gb-otb" id="YWW-ha-zjU"/>
+                        <outlet property="tipAmountLbl" destination="sJb-AF-RLw" id="woO-Vh-ZHE"/>
                         <outlet property="tipPercentageSegment" destination="hhz-ZN-o31" id="WEy-Jn-byE"/>
                         <outlet property="totalAmount" destination="5V4-Nm-XhM" id="bXX-vl-w5p"/>
+                        <outlet property="totalAmtLbl" destination="qVY-nK-9pb" id="Mje-Hx-c7X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -114,6 +116,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZE-0t-zie">
+                                <rect key="frame" x="24" y="179" width="206" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zgR-gR-3cZ">
                                 <rect key="frame" x="21" y="135" width="333" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -123,12 +132,28 @@
                                     <segment title="25%"/>
                                 </segments>
                                 <color key="tintColor" red="0.1156921489" green="0.36538617229999998" blue="0.2981390545" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="tipPercentageChanged:" destination="Uj1-LK-itK" eventType="valueChanged" id="N4Y-RG-PTn"/>
+                                </connections>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mMn-sr-XG5">
+                                <rect key="frame" x="24" y="221" width="121" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Teal"/>
+                                    <segment title="White"/>
+                                </segments>
+                                <color key="tintColor" red="0.12948277247074391" green="0.42112613343989647" blue="0.3447708012282078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="themeChanged:" destination="Uj1-LK-itK" eventType="valueChanged" id="Xjg-mP-29x"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
-                        <color key="backgroundColor" red="0.39794211750000003" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.38334948357142862" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
-                        <outlet property="tipPercentageSegment" destination="zgR-gR-3cZ" id="uRB-c5-tSq"/>
+                        <outlet property="themeSegment" destination="mMn-sr-XG5" id="61c-Af-Lu7"/>
+                        <outlet property="tipPercentageSegment" destination="zgR-gR-3cZ" id="sbw-Bg-FbR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H8f-5d-Bsm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -140,10 +165,10 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b7K-Gf-oKH" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="5K0-Jx-Byb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5K0-Jx-Byb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.39794211750000003" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.30050223214285715" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.39794211750000003" green="0.79648642020000004" blue="0.73808240160000005" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

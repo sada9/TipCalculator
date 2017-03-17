@@ -11,32 +11,26 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var tipPercentageSegment: UISegmentedControl!
+
+    @IBOutlet weak var themeSegment: UISegmentedControl!
     
-    var defTipPerIndex: Double?
     let defaults = UserDefaults.standard
+    var defTipPerIndex: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       tipPercentageSegment.selectedSegmentIndex =  defaults.integer(forKey: "tipcalculator_tipPerIndex")
-        tipPercentageSegment.addTarget(self, action: #selector(tipPercentageIndexChanged(_:)), for: UIControlEvents.valueChanged)
+        tipPercentageSegment.selectedSegmentIndex =  defaults.integer(forKey: "tipcalculator_tipPerIndex")
+        themeSegment.selectedSegmentIndex = defaults.integer(forKey: "tipcalculator_theme")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    func tipPercentageIndexChanged(_ sender : UISegmentedControl){
-        let percentageArray: [Double] = [15, 20, 25]
-        
-        let index = tipPercentageSegment.selectedSegmentIndex
-        
-        
-        defaults.set(index, forKey: "tipcalculator_tipPerIndex")
-        defaults.set(percentageArray[index], forKey: "tipcalculator_tipPer")
+    @IBAction func themeChanged(_ sender: UISegmentedControl) {
+        defaults.set(themeSegment.selectedSegmentIndex, forKey: "tipcalculator_theme")
         defaults.synchronize()
     }
-    
+    @IBAction func tipPercentageChanged(_ sender: UISegmentedControl) {
+        defaults.set(tipPercentageSegment.selectedSegmentIndex, forKey: "tipcalculator_tipPerIndex")
+        defaults.synchronize()
+    }
+
     
 }
